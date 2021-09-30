@@ -4,6 +4,10 @@ NextJS, Redux-toolkit을 이용한 login boilerplate의 client repository입니�
 
 회원가입, 로그인, 로그아웃을 구현하였습니다.
 
+## Server repository
+
+- [server](https://github.com/morethanmin/nextjs-login-boilerplate-server)
+
 ## Tech and libraries
 
 - react
