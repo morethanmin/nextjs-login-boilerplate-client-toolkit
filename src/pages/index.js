@@ -1,30 +1,31 @@
-import { END } from '@redux-saga/core'
-import axios from 'axios'
-import HomeContainer from 'containers/Home'
-import LayoutContainer from 'containers/Layout'
-import wrapper from 'store'
-import { loadUser } from 'store/modules/user'
+import { loadUser } from "actions/user";
+import axios from "axios";
+import HomeContainer from "containers/Home";
+import LayoutContainer from "containers/Layout";
+import wrapper from "store/configureStore";
 
 function Home() {
   return (
     <LayoutContainer>
       <HomeContainer />
     </LayoutContainer>
-  )
+  );
 }
-
+// SSR은 프론트서버에서 진행되기 때문에 브라우저에서는 개입할 수 없다.
+// SSR은 프론트서버에서 백엔드서버로 데이터를 요청하고, 받은 후 브라우저로 데이터와 렌더링을 한번에 보낸다.
+// 서버에서 진행이 되기 떄문에 쿠키를 넣어서 직접 보내줘야한다.
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ req, res, ...etc }) => {
-      const cookie = req ? req.headers.cookie : ''
-      axios.defaults.headers.Cookie = ''
-      if (req && cookie) {
-        axios.defaults.headers.Cookie = cookie
-      }
-      store.dispatch(loadUser())
-      store.dispatch(END)
-      await store.sagaTask.toPromise()
+  (store) => async (context) => {
+    // back 서버로 쿠키 전달
+    // 로그인을 하게되면 context에서 req를 사용 가능
+    // 프론트서버에서 쿠키가 공유되는걸 방지하기 위해 if문으로 조건 작업 진행
+    const cookie = context.req ? context.req.headers.cookie : "";
+    axios.defaults.headers.Cookie = "";
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
     }
-)
+    await store.dispatch(loadUser());
+  }
+);
 
-export default Home
+export default Home;

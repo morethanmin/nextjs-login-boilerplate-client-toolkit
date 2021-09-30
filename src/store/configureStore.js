@@ -9,7 +9,7 @@ const isDev = process.env.NODE_ENV === "development";
 const createStore = () => {
   let middleware = [];
   if (isDev) {
-    middleware.push(logger);
+    middleware.push();
   }
   const store = configureStore({
     reducer: rootReducer,

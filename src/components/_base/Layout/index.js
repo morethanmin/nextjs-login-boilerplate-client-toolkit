@@ -1,21 +1,21 @@
-import React from 'react'
-import styles from './index.module.scss'
-import cx from 'classnames'
-import Link from 'next/link'
+import React from "react";
+import styles from "./index.module.scss";
+import cx from "classnames";
+import Link from "next/link";
 
 export default function Layout({ user, handleSignout, children }) {
   return (
     <div className={cx(styles.wrapper)}>
-      <header className={cx(styles.headerWrapper, 'container')}>
+      <header className={cx(styles.headerWrapper, "container")}>
         <div className={cx(styles.header)}>
           <div>
             <Link href="/">Until</Link>
           </div>
           <div></div>
           <div>
-            {user.data ? (
+            {user.isLoggedIn ? (
               <>
-                <div>{user.data.nick}</div>
+                <div>{user.user.nickname}</div>
                 <button onClick={handleSignout}>sign out</button>
               </>
             ) : (
@@ -28,9 +28,9 @@ export default function Layout({ user, handleSignout, children }) {
         </div>
       </header>
       <main className={cx(styles.main)}>{children}</main>
-      <footer className={cx(styles.footerWrapper, 'container')}>
+      <footer className={cx(styles.footerWrapper, "container")}>
         <div className={cx(styles.footer)}>footer</div>
       </footer>
     </div>
-  )
+  );
 }
