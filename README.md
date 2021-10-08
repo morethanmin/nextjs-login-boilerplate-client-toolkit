@@ -11,7 +11,7 @@ NextJS, Redux-toolkit을 이용한 login boilerplate의 client repository입니�
 ## Tech and libraries
 
 - react
-- next
+- next.js
 - redux
 - redux-toolkit
 - next-redux-wrapper
